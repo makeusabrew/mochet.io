@@ -10,10 +10,11 @@ comfort of your browser.
 
 ## How does it work?
 
-Currently mochet.io is comprised of two main parts:
+Currently mochet.io is comprised of three main parts:
 
 * mochet.coffee - a client script which receives JSON input from Mocha and places it on a queue
 * server.coffee - an express & socket.io server which pulls data off said queue, and pushes it out to all connected clients
+* client.coffee - a JavaScript client which interprets data from the server and attempts to render pretty things in your browser
 
 ## Why does it exist?
 
