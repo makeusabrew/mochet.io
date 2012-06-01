@@ -1,7 +1,18 @@
 extends layout
 
 block content
-    div(data-wrapper)
+    .row
+        .span4
+            .well
+                ul.nav.nav-list(data-active-suites)
+                    li.nav-header Active Suites
+                    li(data-placeholder) None
+                ul.nav.nav-list(data-recent-suites)
+                    li.nav-header Recent Suites
+                    li(data-placeholder) None yet
+                ul.nav.nav-list
+
+        .span8(data-wrapper)
 
 block scripts
     script(src='/socket.io/socket.io.js')
