@@ -1,6 +1,9 @@
 express = require "express"
 app     = express.createServer()
 io      = require("socket.io").listen(app)
+zmq     = require "zmq"
+
+# who's there?
 app.listen "8765"
 
 # config
@@ -25,9 +28,17 @@ io.sockets.on "connection", (socket) ->
     ###
     ## client boot stuff
     ###
-    superSocket = new SuperSocket socket
+    socket.emit "hello"
 
-    superSocket.changeState "welcome"
 
-    ###
-    ## one off static controller 
+# listen out for inbound queue messages
+pull = zmq.socket "pull"
+pull.bind "tcp://127.0.0.1:3456", ->
+
+    pull.on "message", (data) ->
+        data = JSON.parse data
+
+        type = data[0]
+        packet = data[1]
+
+        io.sockets.emit type, packet
