@@ -10,7 +10,9 @@ module.exports = (params) ->
         .attr("data-namespace", suite.namespace)
         .attr("data-title", suite.title)
         .attr("data-instance", suite.instance)
+        .attr("data-identifier", suite.getIdentifier())
         .addClass("suite")
+        .hide()
 
         _wrapper.append identifier
 

@@ -33,4 +33,12 @@ Client =
             catch e
                 console.error e
 
+    bindHandlers: ->
+        $(document).on "click", ".suite-label", (e) ->
+            e.preventDefault()
+            $(".suite").hide()
+            
+            identifier = $(this).parent().attr("data-identifier")
+            $(".suite[data-identifier='#{identifier}']").show()
+
 module.exports = Client
