@@ -12,7 +12,7 @@ comfort of your browser.
 
 Currently mochet.io is comprised of three main parts:
 
-* mochet.coffee - a client script which receives JSON input from Mocha and places it on a queue
+* mochet.coffee - a script which receives JSON input from Mocha and places it on a queue
 * server.coffee - an express & socket.io server which pulls data off said queue, and pushes it out to all connected clients
 * client.coffee - a JavaScript client which interprets data from the server and attempts to render pretty things in your browser
 
@@ -34,6 +34,20 @@ Not a lot at the moment. Currently a bit like this:
 ## Who made it?
 
 [@makeusabrew](http://twitter.com/makeusabrew)
+
+## How do I run it?
+
+You'll need to install ZeroMQ since that's how mochet communicates with the server.
+
+### Start the web server
+
+```coffee ./server.coffee```
+
+### Pipe your Mocha test output through mochet.io
+
+From the project you want to test:
+
+```mocha -R json-stream | coffee /path/to/mochet.io/mochet.coffee "My Project Name"```
 
 ## License
 
