@@ -19,11 +19,20 @@ describe "Suite model", ->
         it "should return the correct title", ->
             assert.equal "My Title", suite.getTitle()
 
+        it "should return the correct full title", ->
+            assert.equal "my_namespace - My Title", suite.getFullTitle()
+
+        it "should return the correct identifier", ->
+            assert.equal "my_namespace_My Title_1", suite.getIdentifier()
+
         it "should not be active", ->
             assert.equal false, suite.isActive()
 
-        it "should not any tests", ->
+        it "should not have any tests", ->
             assert.equal 0, suite.getTestCount()
+
+        it "should have a total test count of zero", ->
+            assert.equal 0, suite.getTotalTestCount()
 
     describe "isActiveForIdentifier", ->
 

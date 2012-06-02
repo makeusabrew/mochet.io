@@ -16,41 +16,40 @@ PageController =
 
         suite.addTest data
 
-        tmp = _current[data.namespace.identifier][data.namespace.title] += 1
+        domSuite = _wrapper.find suite.getDomString()
 
-        suite.find("[data-current]").html(tmp)
+        domSuite.find("[data-current]").html suite.getTestCount()
         
         symbol = if type is "pass" then "✔" else "✘"
 
         li = $("<li><span class='#{type}'>#{symbol}</span> #{data.fullTitle}</li>")
-        ul = suite.find("ul.tests")
+
+        ul = domSuite.find("ul.tests")
         ul.append(li)
-        suite.find(".test-wrapper").scrollTop(ul.height())
 
-        total = parseInt(suite.find("[data-total]").html())
+        domSuite.find(".test-wrapper").scrollTop(ul.height())
 
-        pc = Math.round((tmp / total) * 100)
+        pc = Math.round suite.getPercentComplete()
 
-        suite.find(".progress .bar").css("width", "#{pc}%")
+        domSuite.find(".progress .bar").css("width", "#{pc}%")
 
     createSuite: (data) ->
         suite = SuiteMapper.createSuite data
 
-        idString = "[data-namespace='#{data.identifier.namespace}'][data-title='#{data.identifier.title}']"
+        suite.activate()
 
-        identifier = _wrapper.find(idString)
+        identifier = _wrapper.find suite.getDomString()
 
         if not identifier.length
             identifier = $("<div></div>")
-            .attr("data-namespace", data.identifier.namespace)
-            .attr("data-title", data.identifier.title)
+            .attr("data-namespace", suite.namespace)
+            .attr("data-title", suite.title)
+            .attr("data-instance", suite.instance)
+            .addClass("suite")
 
             _wrapper.append identifier
 
 
-        suite = identifier.find("[data-title='#{data.title}']").remove()
-
-        suite = $("<div></div>").attr("data-title", data.title).addClass("suite")
 
         h2 = $("<h2></h2>")
         .html(data.title)
@@ -62,43 +61,48 @@ PageController =
 
         div = $("<div class=test-wrapper></div>").append(tests)
 
-        suite
+        identifier
         .append(h2)
         .append(progress)
         .append(div)
 
-        identifier.append suite
-
-    findSuite: (data) ->
-        return _wrapper.find("[data-identifier='#{data.identifier}'] [data-title='#{data.title}']")
-
     startSuite: (data) ->
-        suite = PageController.findSuite data.namespace
-        return if suite.length is 0
+        suite = SuiteMapper.findActive data.identifier
+        return if not suite
 
-        suite.find("[data-total]").html(data.total)
+        # @todo setter?
+        suite.totalTests = data.total
+
+        domSuite = _wrapper.find suite.getDomString()
+
+        domSuite.find("[data-total]").html suite.getTotalTestCount()
 
         active = $("ul[data-active-suites]")
         active.find("[data-placeholder]").remove()
 
-        li = $("<li></li>").attr("data-namespace", data.namespace.identifier+"_"+data.namespace.title).html(data.namespace.identifier+ " - "+data.namespace.title)
+        li = $("<li></li>")
+        .attr("data-identifier", suite.getIdentifier())
+        .html(suite.getFullTitle())
+
         active.append li
 
     endSuite: (data) ->
-        suite = PageController.findSuite data.namespace
-        return if suite.length is 0
+        suite = SuiteMapper.findActive data.identifier
+        return if not suite
+
+        domSuite = _wrapper.find suite.getDomString()
 
         if data.failures > 0
-            suite.find(".progress").addClass("progress-warning")
+            domSuite.find(".progress").addClass("progress-warning")
         else
-            suite.find(".progress").addClass("progress-success")
+            domSuite.find(".progress").addClass("progress-success")
 
-        suite.find(".progress").removeClass("active")
+        domSuite.find(".progress").removeClass("active")
 
         active = $("ul[data-active-suites]")
         active.find("[data-placeholder]").remove()
 
-        li = active.find("[data-namespace='#{data.namespace.identifier}_#{data.namespace.title}']").remove()
+        li = active.find("[data-identifier='#{suite.getIdentifier()}']").remove()
 
         if active.find("li").length is 1
             active.append("<li data-placeholder>None</li>")

@@ -16,9 +16,16 @@ class Suite
         @instance  = instance
         @active    = false
         @tests     = []
+        @totalTests= 0
 
     getTitle: ->
         @title
+
+    getFullTitle: ->
+        "#{@namespace} - #{@title}"
+
+    getIdentifier: ->
+        "#{@namespace}_#{@title}_#{@instance}"
 
     getDomString: ->
         "[data-namespace='#{@namespace}'][data-title='#{@title}'][data-instance='#{@instance}']"
@@ -35,5 +42,14 @@ class Suite
 
     getTestCount: ->
         @tests.length
+
+    getTotalTestCount: ->
+        @totalTests
+
+    getPercentComplete: ->
+        (@getTestCount() / @getTotalTestCount()) * 100
+
+    activate: ->
+        @active = true
 
 module.exports = Suite
