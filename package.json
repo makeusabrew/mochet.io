@@ -11,5 +11,9 @@
         "socket.io": ">= 0.9.6",
         "browserify": ">= 1.10.8",
         "mocha": ">= 1.1.0"
+    },
+    "scripts": {
+        "start": "coffee server.coffee",
+        "test": "./node_modules/mocha/bin/mocha"
     }
 }
