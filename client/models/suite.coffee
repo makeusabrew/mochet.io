@@ -58,4 +58,9 @@ class Suite
     deactivate: ->
         @active = false
 
+    success: ->
+        return false for test in @tests when not test.isPass()
+
+        return true
+
 module.exports = Suite

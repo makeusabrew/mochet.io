@@ -4,11 +4,6 @@ module.exports = (params) ->
     _wrapper    = $("[data-wrapper]")
     domSuite = _wrapper.find suite.getDomString()
 
-    if params.failures > 0
-        domSuite.find(".progress").addClass("progress-warning")
-    else
-        domSuite.find(".progress").addClass("progress-success")
-
     domSuite.find(".progress").removeClass("active")
 
     active = $("ul[data-active-suites]")
@@ -21,6 +16,17 @@ module.exports = (params) ->
 
     recent = $("ul[data-recent-suites]")
     recent.find("[data-placeholder]").remove()
+
+    badge = li
+    .find(".badge")
+    .removeClass("badge-info")
+    
+    if suite.success()
+        badge.addClass("badge-success").html("ok")
+        domSuite.find(".progress").addClass("progress-success")
+    else
+        badge.addClass("badge-important").html("fail")
+        domSuite.find(".progress").addClass("progress-danger")
 
     recent.append li
 

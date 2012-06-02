@@ -19,3 +19,4 @@ module.exports = (params) ->
     pc = Math.round suite.getPercentComplete()
 
     domSuite.find(".progress .bar").css("width", "#{pc}%")
+    $("li[data-identifier='#{suite.getIdentifier()}'] .badge").html("#{pc}%")
