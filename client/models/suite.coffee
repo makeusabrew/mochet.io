@@ -9,14 +9,14 @@
 
 class Suite
     constructor: (data, instance) ->
-        @namespace = ""
-        @title     = ""
-        @instance  = ""
+        @namespace = data.namespace
+        @title     = data.title
+        @instance  = instance
 
     getTitle: ->
         @namespace.title
 
     getDomString: ->
-        "[data-namespace='#{@namespace}][data-title='#{@title}][data-instance='#{@instance}']"
+        "[data-namespace='#{@namespace}'][data-title='#{@title}'][data-instance='#{@instance}']"
 
 module.exports = Suite
