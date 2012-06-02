@@ -1,7 +1,5 @@
 _socket    = null
 _connected = false
-_wrapper   = $("[data-wrapper]")
-_current   = {}
 
 PageController = require "./controllers/page"
 

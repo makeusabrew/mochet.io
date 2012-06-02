@@ -84,7 +84,7 @@ PageController =
         active = $("ul[data-active-suites]")
         active.find("[data-placeholder]").remove()
 
-        active.find("[data-namespace='#{data.namespace.identifier}_#{data.namespace.title}']").remove()
+        li = active.find("[data-namespace='#{data.namespace.identifier}_#{data.namespace.title}']").remove()
 
         if active.find("li").length is 1
             active.append("<li data-placeholder>None</li>")
@@ -92,7 +92,6 @@ PageController =
         recent = $("ul[data-recent-suites]")
         recent.find("[data-placeholder]").remove()
 
-        li = $("<li></li>").attr("data-namespace", data.namespace.identifier+"_"+data.namespace.title).html(data.namespace.identifier+ " - "+data.namespace.title)
         recent.append li
 
 module.exports = PageController

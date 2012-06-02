@@ -1,3 +1,4 @@
+#!/usr/local/bin/coffee
 express = require "express"
 app     = express.createServer()
 io      = require("socket.io").listen(app)
@@ -14,7 +15,7 @@ app.configure ->
     app.set "view options", {layout: false}
     app.set "views", "./server/views"
 
-    bundle = require("browserify")({mount:"/boot.js", entry:"./client.coffee"})
+    bundle = require("browserify")({mount:"/boot.js", entry:"./client/boot.coffee"})
     app.use bundle
 
 #io.configure ->
