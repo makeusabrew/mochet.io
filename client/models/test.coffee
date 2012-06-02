@@ -11,9 +11,13 @@
 ###
 
 class Test
-    constructor: (data) ->
+    constructor: (data, type) ->
         @title     = data.title
         @fullTitle = data.fullTitle
         @duration  = data.duration
+        @type      = type
+
+    isPass: ->
+        return @type is "pass"
 
 module.exports = Test

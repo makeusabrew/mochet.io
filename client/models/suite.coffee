@@ -36,9 +36,10 @@ class Suite
     isActiveForIdentifier: (identifier) ->
         @active and @namespace is identifier.namespace and @title is identifier.title
 
-    addTest: (data) ->
-        test = new Test data
+    addTest: (data, type) ->
+        test = new Test data, type
         @tests.push test
+        return test
 
     getTestCount: ->
         @tests.length

@@ -1,9 +1,11 @@
-_wrapper    = $("[data-wrapper]")
+module.exports = (params) ->
+    suite = params.suite
 
-module.exports = (data) ->
-    suite = data.suite
+    _wrapper    = $("[data-wrapper]")
 
     identifier = _wrapper.find suite.getDomString()
+
+    console.log _wrapper, identifier
 
     if not identifier.length
         identifier = $("<div></div>")
@@ -14,10 +16,8 @@ module.exports = (data) ->
 
         _wrapper.append identifier
 
-
-
     h2 = $("<h2></h2>")
-    .html(data.title)
+    .html(params.title)
     .append(" (<span data-current>0</span> / <span data-total>?</span>)")
 
     progress = $('<div class="progress progress-striped active"> <div class="bar" style="width: 0%;"></div> </div>')
