@@ -46,6 +46,8 @@ PageController =
         suite = SuiteMapper.findActive data.identifier
         return if not suite
 
+        suite.deactivate()
+
         params       = data
         params.suite = suite
         View.render "suite:end", params

@@ -48,9 +48,14 @@ class Suite
         @totalTests
 
     getPercentComplete: ->
+        return 0 if not @getTotalTestCount()
+
         (@getTestCount() / @getTotalTestCount()) * 100
 
     activate: ->
         @active = true
+
+    deactivate: ->
+        @active = false
 
 module.exports = Suite

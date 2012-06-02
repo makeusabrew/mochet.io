@@ -5,8 +5,6 @@ module.exports = (params) ->
 
     identifier = _wrapper.find suite.getDomString()
 
-    console.log _wrapper, identifier
-
     if not identifier.length
         identifier = $("<div></div>")
         .attr("data-namespace", suite.namespace)
