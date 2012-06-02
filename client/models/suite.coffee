@@ -12,11 +12,18 @@ class Suite
         @namespace = data.namespace
         @title     = data.title
         @instance  = instance
+        @active = false
 
     getTitle: ->
         @title
 
     getDomString: ->
         "[data-namespace='#{@namespace}'][data-title='#{@title}'][data-instance='#{@instance}']"
+
+    isActive: ->
+        @active
+
+    isActiveForIdentifier: (identifier) ->
+        @active and @namespace is identifier.namespace and @title is identifier.title
 
 module.exports = Suite

@@ -7,9 +7,9 @@ testData =
    title: "My Title"
 
 describe "Suite mapper", ->
+    suite = null
 
     describe "createSuite", ->
-        suite = null
 
         before ->
             suite = SuiteMapper.createSuite testData
@@ -22,3 +22,13 @@ describe "Suite mapper", ->
 
         it "should return a suite with the correct title", ->
             assert.equal "My Title", suite.getTitle()
+
+    describe "findAll", ->
+        
+        it "should return the correct number of suites", ->
+            assert.equal 1, SuiteMapper.findAll().length
+
+    describe "findActive", ->
+        
+        it "should return null for no active match", ->
+            assert.equal null, SuiteMapper.findActive testData
