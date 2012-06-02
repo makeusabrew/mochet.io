@@ -1,10 +1,21 @@
-_wrapper   = $("[data-wrapper]")
-_current   = {}
+###
+# PageController is a bit of a bad name for this, so it'll probably get renamed
+# at some point. SuiteController perhaps?
+###
+
+SuiteMapper = require "../models/mappers/suite"
+
+_wrapper    = $("[data-wrapper]")
+
+suites = []
 
 PageController =
     addTest: (type, data) ->
-        suite = PageController.findSuite data.namespace
-        return if suite.length is 0
+        #suite = PageController.findSuite data.namespace
+        suite = SuiteMapper.findActive data.identifier
+        return if not suite
+
+        suite.addTest data
 
         tmp = _current[data.namespace.identifier][data.namespace.title] += 1
 
@@ -23,16 +34,20 @@ PageController =
 
         suite.find(".progress .bar").css("width", "#{pc}%")
 
-    createNamespace: (data) ->
-        identifier = _wrapper.find("[data-identifier='#{data.identifier}']")
+    createSuite: (data) ->
+        suite = SuiteMapper.createSuite data
+
+        idString = "[data-namespace='#{data.identifier.namespace}'][data-title='#{data.identifier.title}']"
+
+        identifier = _wrapper.find(idString)
 
         if not identifier.length
-            identifier = $("<div></div>").attr("data-identifier", data.identifier)
+            identifier = $("<div></div>")
+            .attr("data-namespace", data.identifier.namespace)
+            .attr("data-title", data.identifier.title)
+
             _wrapper.append identifier
 
-        _current[data.identifier] = {} if not _current[data.identifier]
-
-        _current[data.identifier][data.title] = 0
 
         suite = identifier.find("[data-title='#{data.title}']").remove()
 

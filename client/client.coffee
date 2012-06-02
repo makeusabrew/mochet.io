@@ -12,8 +12,8 @@ Client =
         _socket.on "connect", ->
             _connected = true
 
-        _socket.on "namespace", (data) ->
-            PageController.createNamespace data
+        _socket.on "identifier", (data) ->
+            PageController.createSuite data
 
         _socket.on "start", (data) ->
             PageController.startSuite data
