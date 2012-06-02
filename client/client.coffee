@@ -12,19 +12,25 @@ Client =
         _socket.on "connect", ->
             _connected = true
 
-        _socket.on "identifier", (data) ->
-            PageController.createSuite data
+        _socket.on "message", (packet) ->
+            try
+                messages = JSON.parse(packet)
+                
+                # messages can be chunked together to save bandwidth, so we always expect each packet
+                # to be an array of *at least* one message, so we have to split it here and act accordingly
 
-        _socket.on "start", (data) ->
-            PageController.startSuite data
+                for message in messages
+                    method = message[0]
+                    data   = message[1]
 
-        _socket.on "pass", (data) ->
-            PageController.addTest "pass", data
-
-        _socket.on "fail", (data) ->
-            PageController.addTest "fail", data
-
-        _socket.on "end", (data) ->
-            PageController.endSuite data
+                    switch method
+                        when "identifier" then PageController.createSuite data
+                        when "start"      then PageController.startSuite data
+                        when "pass"       then PageController.addTest "pass", data
+                        when "fail"       then PageController.addTest "fail", data
+                        when "end"        then PageController.endSuite data
+                        else console.log "ignoring method #{method}"
+            catch e
+                console.error e
 
 module.exports = Client

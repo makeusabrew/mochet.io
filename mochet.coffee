@@ -16,18 +16,28 @@ zmq = require "zmq"
 push = zmq.socket "push"
 push.connect "tcp://127.0.0.1:3456"
 
-msg = ["identifier", identifier]
+msg = [["identifier", identifier]]
 push.send JSON.stringify(msg)
 
+require "colors"
 process.stdin.on "data", (chunk) ->
     # proxy all stdin to console transparently (@todo make this optional)
     process.stdout.write chunk
 
-    # deconstruct incoming packet, add our identifier and pass it on
-    data = JSON.parse(chunk)
-    data[1].identifier = identifier
+    # we might well get multiple lines per chunk, so we have to split them out
+    # line by line and augment each one before packing it all up to send on
+    # to the queue
+    lines = chunk.split "\n"
 
-    push.send JSON.stringify(data)
+    final = []
+    for line in lines
+        if line != ''
+            _line = JSON.parse line
+            _line[1].identifier = identifier
+
+            final.push _line
+
+    push.send JSON.stringify(final) if final.length
 
 # ensure we terminate properly when stdin's done
 process.stdin.on "end", ->

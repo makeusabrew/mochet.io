@@ -12,6 +12,6 @@ module.exports = (params) ->
 
     li = $("<li></li>")
     .attr("data-identifier", params.suite.getIdentifier())
-    .html("<a href=#>#{suite.getFullTitle()} <span class='badge badge-info'></span></a>")
+    .html("<a class=suite-label href=#>#{suite.getFullTitle()} <span class='badge badge-info'>0%</span></a>")
 
     active.append li

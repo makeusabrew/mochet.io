@@ -37,9 +37,7 @@ pull = zmq.socket "pull"
 pull.bind "tcp://127.0.0.1:3456", ->
 
     pull.on "message", (data) ->
-        data = JSON.parse data
-
-        type = data[0]
-        packet = data[1]
-
-        io.sockets.emit type, packet
+        # we simply proxy messages through to the client
+        # each packet might be multiple (sometimes MANY) actual
+        # messages, so if we split them out here we'll swamp clients
+        io.sockets.emit "message", data.toString("utf-8")
