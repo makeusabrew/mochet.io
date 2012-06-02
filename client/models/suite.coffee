@@ -14,7 +14,7 @@ class Suite
         @instance  = instance
 
     getTitle: ->
-        @namespace.title
+        @title
 
     getDomString: ->
         "[data-namespace='#{@namespace}'][data-title='#{@title}'][data-instance='#{@instance}']"
