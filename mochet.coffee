@@ -25,3 +25,6 @@ process.stdin.on "data", (chunk) ->
     data[1].namespace = namespace
 
     push.send JSON.stringify(data)
+
+process.stdin.on "end", ->
+    process.exit()
