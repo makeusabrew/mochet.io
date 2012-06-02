@@ -11,7 +11,6 @@ suites = []
 
 PageController =
     addTest: (type, data) ->
-        #suite = PageController.findSuite data.namespace
         suite = SuiteMapper.findActive data.identifier
         return if not suite
 

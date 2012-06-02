@@ -7,12 +7,15 @@
 # instance = 1, 2, 3...
 ###
 
+Test = require "./test"
+
 class Suite
     constructor: (data, instance) ->
         @namespace = data.namespace
         @title     = data.title
         @instance  = instance
-        @active = false
+        @active    = false
+        @tests     = []
 
     getTitle: ->
         @title
@@ -25,5 +28,12 @@ class Suite
 
     isActiveForIdentifier: (identifier) ->
         @active and @namespace is identifier.namespace and @title is identifier.title
+
+    addTest: (data) ->
+        test = new Test data
+        @tests.push test
+
+    getTestCount: ->
+        @tests.length
 
 module.exports = Suite
