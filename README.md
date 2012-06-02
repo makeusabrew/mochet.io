@@ -1,6 +1,8 @@
 # Mocha + Socket.io = mochet.io
 AKA view real time Mocha test results in your web browser
 
+[![Build Status](https://secure.travis-ci.org/makeusabrew/mochet.io.png?branch=master)](http://travis-ci.org/makeusabrew/mochet.io)
+
 ## What is it?
 
 A way of viewing any number of remotely executed test suites run under
