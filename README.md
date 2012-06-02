@@ -49,6 +49,10 @@ From the project you want to test:
 
 ```mocha -R json-stream | coffee /path/to/mochet.io/mochet.coffee "My Project Name"```
 
+Mochet reads from stdin, so the only argument it needs is some way of identifying
+the project you're testing. It'll create an automatic namespace for tests being
+sent from each different machine by using its hostname and OS version.
+
 ## License
 
 (The MIT License)
