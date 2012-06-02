@@ -1,4 +1,4 @@
-require "../suite.coffe"
+Suite = require "../suite"
 suites = []
 
 SuiteMapper =
@@ -15,3 +15,5 @@ SuiteMapper =
     # terminology: an "identifier" is really just a namespace+title... for now
     findForIdentifier: (identifier) ->
         return suite for suite in suites when suite.namespace
+
+module.exports = SuiteMapper
